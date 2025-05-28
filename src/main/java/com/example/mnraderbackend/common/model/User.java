@@ -1,5 +1,7 @@
 package com.example.mnraderbackend.common.model;
 
+import com.example.mnraderbackend.common.convert.status.Status;
+import com.example.mnraderbackend.common.convert.status.StatusConverter;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,7 +22,8 @@ public class User {
     private Region region;
 
     @Column(nullable = false)
-    private Integer status; // ACTIVE(1), INACTIVE(2), SUSPEND(3)
+    @Convert(converter = StatusConverter.class)
+    private Status status; // ACTIVE(1), INACTIVE(2), SUSPEND(3)
 
     @Column(nullable = false)
     private Timestamp createdAt;

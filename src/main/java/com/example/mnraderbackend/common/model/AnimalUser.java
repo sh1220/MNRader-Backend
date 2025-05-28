@@ -1,5 +1,9 @@
 package com.example.mnraderbackend.common.model;
 
+import com.example.mnraderbackend.common.convert.gender.Gender;
+import com.example.mnraderbackend.common.convert.gender.GenderConverter;
+import com.example.mnraderbackend.common.convert.status.Status;
+import com.example.mnraderbackend.common.convert.status.StatusConverter;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -24,7 +28,8 @@ public class AnimalUser {
     private User user;
 
     @Column(nullable = false)
-    private Integer status; // LOST(1), PROTECTED(2), SIGHTING(3)
+    @Convert(converter = StatusConverter.class)
+    private Status status; // LOST(1), PROTECTED(2), SIGHTING(3)
 
     @Column(nullable = false)
     private Timestamp createdAt;
@@ -33,7 +38,8 @@ public class AnimalUser {
     private Timestamp updatedAt;
 
     @Column(nullable = false)
-    private Integer gender; // MALE(1), FEMALE(2), UNKNOWN(3)
+    @Convert(converter = GenderConverter.class)
+    private Gender gender; // MALE(1), FEMALE(2), UNKNOWN(3)
 
     @Column(columnDefinition = "TEXT")
     private String detail;

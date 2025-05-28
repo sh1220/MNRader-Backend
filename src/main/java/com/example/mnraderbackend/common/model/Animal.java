@@ -1,5 +1,9 @@
 package com.example.mnraderbackend.common.model;
 
+import com.example.mnraderbackend.common.convert.gender.Gender;
+import com.example.mnraderbackend.common.convert.gender.GenderConverter;
+import com.example.mnraderbackend.common.convert.status.Status;
+import com.example.mnraderbackend.common.convert.status.StatusConverter;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -28,7 +32,8 @@ public class Animal {
     private Region region;
 
     @Column(nullable = false)
-    private Integer status;
+    @Convert(converter = StatusConverter.class)
+    private Status status;
 
     @Column(nullable = false)
     private Timestamp createdAt;
@@ -42,7 +47,9 @@ public class Animal {
     @Column(nullable = false, length = 300)
     private String addressDetail;
 
-    private Integer gender;
+    @Column(nullable = false)
+    @Convert(converter = GenderConverter.class)
+    private Gender gender;
 
     private Timestamp when;
 

@@ -24,5 +24,8 @@ WORKDIR /app
 # JAR 파일 복사
 COPY ./build/libs/app.jar ./app.jar
 
+# 비루트 사용자 생성 및 전환
+RUN groupadd -r appuser && useradd -r -g appuser appuser
+USER appuser
 # 애플리케이션 실행
 ENTRYPOINT ["java", "-jar", "app.jar"]

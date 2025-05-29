@@ -51,7 +51,8 @@ public class Animal {
     @Convert(converter = GenderConverter.class)
     private Gender gender;
 
-    private Timestamp when;
+    @Column(nullable = false)
+    private Timestamp occurredAt;
 
     @Column(nullable = false, length = 30)
     private String phone;

@@ -1,6 +1,7 @@
 package com.example.mnraderbackend.common.model;
 
-import com.example.mnraderbackend.common.convert.animal.AnimalConverter;
+import com.example.mnraderbackend.common.convert.animal_type.AnimalType;
+import com.example.mnraderbackend.common.convert.animal_type.AnimalTypeConverter;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -15,8 +16,8 @@ public class Breed {
     private Long id;
 
     @Column(nullable = false)
-    @Convert(converter = AnimalConverter.class)
-    private Animal animal;
+    @Convert(converter = AnimalTypeConverter.class)
+    private AnimalType animalType;
 
     @Column(nullable = false, length = 50)
     private String breed;

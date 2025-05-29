@@ -17,7 +17,7 @@ public class GetJwtHandlerArgumentResolver implements HandlerMethodArgumentResol
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         boolean hasAnnotation = parameter.hasParameterAnnotation(PreAccessToken.class);
-        log.info(Arrays.toString(parameter.getParameterAnnotations()));
+        log.debug(Arrays.toString(parameter.getParameterAnnotations()));
         boolean hasType = long.class.isAssignableFrom(parameter.getParameterType())
                 || Long.class.isAssignableFrom(parameter.getParameterType());
         log.info("hasAnnotation={}, hasType={}, hasAnnotation && hasType={}", hasAnnotation, hasType, hasAnnotation&&hasType);

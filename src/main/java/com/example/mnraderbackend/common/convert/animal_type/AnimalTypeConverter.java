@@ -1,13 +1,13 @@
-package com.example.mnraderbackend.common.convert.animal;
+package com.example.mnraderbackend.common.convert.animal_type;
 
 import jakarta.persistence.AttributeConverter;
 import jakarta.persistence.Converter;
 
 @Converter(autoApply = true) // 자동으로 모든 관련 필드에 적용
-public class AnimalConverter implements AttributeConverter<Animal, Integer> {
+public class AnimalTypeConverter implements AttributeConverter<AnimalType, Integer> {
 
     @Override
-    public Integer convertToDatabaseColumn(Animal attribute) {
+    public Integer convertToDatabaseColumn(AnimalType attribute) {
         if (attribute == null) {
             return null;
         }
@@ -15,10 +15,10 @@ public class AnimalConverter implements AttributeConverter<Animal, Integer> {
     }
 
     @Override
-    public Animal convertToEntityAttribute(Integer dbData) {
+    public AnimalType convertToEntityAttribute(Integer dbData) {
         if (dbData == null) {
             return null;
         }
-        return Animal.fromCode(dbData); // DB 정수값 -> Enum
+        return AnimalType.fromCode(dbData); // DB 정수값 -> Enum
     }
 }

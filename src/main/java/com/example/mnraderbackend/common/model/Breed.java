@@ -1,8 +1,6 @@
 package com.example.mnraderbackend.common.model;
 
 import com.example.mnraderbackend.common.convert.animal.AnimalConverter;
-import com.example.mnraderbackend.common.convert.status.Status;
-import com.example.mnraderbackend.common.convert.status.StatusConverter;
 import jakarta.persistence.*;
 import lombok.*;
 

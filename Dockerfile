@@ -19,6 +19,8 @@ ENV SPRING_PROFILES_ACTIVE=dev
 # 컨테이너에서 사용할 포트 설정
 EXPOSE 8080
 
+# 작업 디렉토리 설정
+WORKDIR /app
 # JAR 파일 복사
 COPY ./build/libs/app.jar ./app.jar
 

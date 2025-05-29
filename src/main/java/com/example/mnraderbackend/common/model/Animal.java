@@ -19,15 +19,15 @@ public class Animal {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "breed_id", nullable = false)
     private Breed breed;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "region_id", nullable = false)
     private Region region;
 
@@ -51,7 +51,8 @@ public class Animal {
     @Convert(converter = GenderConverter.class)
     private Gender gender;
 
-    private Timestamp when;
+    @Column(nullable = false)
+    private Timestamp occurredAt;
 
     @Column(nullable = false, length = 30)
     private String phone;

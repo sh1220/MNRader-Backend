@@ -1,5 +1,5 @@
 # Amazon Corretto 17 기반 이미지 사용
-FROM openjdk:17-slim
+FROM openjdk:17
 
 # 환경변수는 컨테이너 실행 시점에 주입 (docker run -e ...)사용
 # Spring Boot Profile 설정 (dev)

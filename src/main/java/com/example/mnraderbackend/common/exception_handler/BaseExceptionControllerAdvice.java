@@ -1,6 +1,6 @@
 package com.example.mnraderbackend.common.exception_handler;
 
-// import jakarta.validation.ConstraintViolationException;
+// (Line removed)
 
 import com.example.mnraderbackend.common.response.BaseErrorResponse;
 import lombok.extern.slf4j.Slf4j;

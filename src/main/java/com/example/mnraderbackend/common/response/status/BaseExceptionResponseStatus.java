@@ -24,6 +24,8 @@ public enum BaseExceptionResponseStatus implements ResponseStatus {
     MY_UPDATE_ALARM_SUCCESS(1201, HttpStatus.OK.value(), "알림 설정에 성공하였습니다."),
     MY_UPDATE_EMAIL_SUCCESS(1202, HttpStatus.OK.value(), "이메일 설정에 성공하였습니다."),
     MY_UPDATE_CITY_SUCCESS(1203, HttpStatus.OK.value(), "지역 설정에 성공하였습니다."),
+    // 1300: 토큰
+    FCM_TOKEN_POST_SUCCESS(1301, HttpStatus.OK.value(), "FCM 토큰 등록에 성공하였습니다."),
 
     /**
      * 2000: Request 오류 (BAD_REQUEST)
@@ -56,7 +58,8 @@ public enum BaseExceptionResponseStatus implements ResponseStatus {
     MY_UPDATE_ALARM_FAIL(4201, HttpStatus.NOT_FOUND.value(), "알림 설정에 실패하였습니다."),
     MY_UPDATE_EMAIL_FAIL(4202, HttpStatus.NOT_FOUND.value(), "이메일 설정에 실패하였습니다."),
     MY_UPDATE_CITY_FAIL(4203, HttpStatus.NOT_FOUND.value(), "지역 설정에 실패하였습니다."),
-
+    // 4300: 토큰
+    FCM_TOKEN_POST_FAIL(4301, HttpStatus.NOT_FOUND.value(), "FCM 토큰 등록에 실패하였습니다."),
     /**
      * 5000: 토큰 오류
      */

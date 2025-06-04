@@ -12,7 +12,7 @@ import lombok.*;
 @Builder
 public class Breed {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private Long id;
 
     @Column(nullable = false)

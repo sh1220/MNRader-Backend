@@ -41,11 +41,8 @@ public class Animal {
     @Column(nullable = false)
     private Timestamp updatedAt;
 
-    @Column(nullable = false, length = 200)
-    private String address;
-
     @Column(nullable = false, length = 300)
-    private String addressDetail;
+    private String address;
 
     @Column(nullable = false)
     @Convert(converter = GenderConverter.class)

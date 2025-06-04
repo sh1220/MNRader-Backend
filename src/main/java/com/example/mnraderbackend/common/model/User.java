@@ -9,6 +9,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
@@ -37,6 +38,9 @@ public class User {
     @Column(nullable = false, length = 200)
     private String password;
 
-    @Column(columnDefinition = "TEXT")
+    @Column(length = 512)
     private String refreshToken;
+
+    @Column(length = 512)
+    private String fcmToken;
 }

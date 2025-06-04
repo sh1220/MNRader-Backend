@@ -46,4 +46,10 @@ public class AnimalUser {
 
     @Column(columnDefinition = "TEXT")
     private String image;
+
+    @Column(nullable = false)
+    private int age;
+
+    @Column(length = 40, nullable = false)
+    private String name;
 }

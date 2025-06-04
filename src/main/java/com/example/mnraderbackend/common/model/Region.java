@@ -10,12 +10,10 @@ import lombok.*;
 @Builder
 public class Region {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     private Long id;
 
     @Column(nullable = false, length = 200)
     private String city;
 
-    @Column(nullable = false, length = 200)
-    private String district;
 }

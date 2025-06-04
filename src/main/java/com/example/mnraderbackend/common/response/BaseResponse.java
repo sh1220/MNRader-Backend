@@ -2,6 +2,7 @@ package com.example.mnraderbackend.common.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import lombok.Builder;
 import lombok.Getter;
 
 import com.example.mnraderbackend.common.response.status.ResponseStatus;
@@ -19,10 +20,17 @@ public class BaseResponse<T> implements ResponseStatus {
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private final T result;
 
-    public BaseResponse(T result) {
-        this.code = SUCCESS.getCode();
-        this.status = SUCCESS.getStatus();
-        this.message = SUCCESS.getMessage();
+    public BaseResponse(ResponseStatus responseStatus) {
+        this.code = responseStatus.getCode();
+        this.status = responseStatus.getStatus();
+        this.message = responseStatus.getMessage();
+        result = null;
+    }
+
+    public BaseResponse(ResponseStatus responseStatus, T result) {
+        this.code = responseStatus.getCode();
+        this.status = responseStatus.getStatus();
+        this.message = responseStatus.getMessage();
         this.result = result;
     }
 
@@ -42,3 +50,4 @@ public class BaseResponse<T> implements ResponseStatus {
     }
 
 }
+

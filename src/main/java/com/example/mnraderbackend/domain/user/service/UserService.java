@@ -28,41 +28,18 @@ public class UserService {
     }
 
     public void sendLostAlarm(@PreAuthorize String userId, Long regionId) {
-        // 사용자의 Firebase 토큰 값을 조회
-        List<String> registrationTokens = userRepository.findFcmTokensByRegionId(regionId);
-        // 메시지 구성
-        MulticastMessage message = MulticastMessage.builder()
-                .putData("title", "동물 실종")
-                .putData("content", "현 지역에서 동물이 실종되었습니다.")
-                .addAllTokens(registrationTokens) // 조회한 토큰 값을 사용
-                .build();
-
-        try {
-            BatchResponse response = FirebaseMessaging.getInstance().sendMulticast(message);
-            if (response.getFailureCount() > 0) {
-                List<SendResponse> responses = response.getResponses();
-                for (int i = 0; i < responses.size(); i++) {
-                    SendResponse sendResponse = responses.get(i);
-                    if (!sendResponse.isSuccessful()) {
-                        log.error("Firebase 메시지 전송 실패: {}", sendResponse.getException().getMessage());
-                    }
-                }
-            } else {
-                log.info("Firebase 메시지 전송 성공");
-            }
-        } catch (FirebaseMessagingException e) {
-            log.error("Firebase 메시지 전송 실패: {}", e.getMessage());
-        }
+        sendFirebaseMessage("동물 실종", "현 지역에서 동물이 실종되었습니다.", regionId);
     }
 
     public void sendSightAlarm(@PreAuthorize String userId, Long regionId) {
-        // 사용자의 Firebase 토큰 값을 조회
+        sendFirebaseMessage("유기동물 발견", "현 지역에서 동물이 발견되었습니다.", regionId);
+    }
+    private void sendFirebaseMessage(String title, String content, Long regionId) {
         List<String> registrationTokens = userRepository.findFcmTokensByRegionId(regionId);
-
         MulticastMessage message = MulticastMessage.builder()
-                .putData("title", "유기동물 발견")
-                .putData("content", "현 지역에서 동물이 발견되었습니다.")
-                .addAllTokens(registrationTokens) // 조회한 토큰 값을 사용
+                .putData("title", title)
+                .putData("content", content)
+                .addAllTokens(registrationTokens)
                 .build();
 
         try {

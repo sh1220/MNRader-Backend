@@ -1,7 +1,6 @@
 package com.example.mnraderbackend.service;
 
 import com.example.mnraderbackend.common.convert.gender.Gender;
-import com.example.mnraderbackend.common.convert.status.Status;
 import com.example.mnraderbackend.common.model.AnimalUser;
 import com.example.mnraderbackend.common.model.Breed;
 import com.example.mnraderbackend.repository.AnimalUserRepository;
@@ -23,6 +22,7 @@ public class AnimalUserService {
                                  Integer animal,
                                  String breedName,
                                  Integer genderCode,
+                                 Integer age,
                                  String detail,
                                  MultipartFile imageFile) {
 
@@ -43,19 +43,12 @@ public class AnimalUserService {
                 ? "/images/" + imageFile.getOriginalFilename()
                 : animalUser.getImage();
 
-        // update fields
-        animalUser = AnimalUser.builder()
-                .id(animalUser.getId())
-                .breed(breed)
-                .user(animalUser.getUser())
-                .status(animalUser.getStatus()) // 그대로 유지
-                .createdAt(animalUser.getCreatedAt()) // 유지
-                .updatedAt(new Timestamp(System.currentTimeMillis()))
-                .gender(gender)
-                .detail(detail)
-                .image(imageUrl)
-                .build();
-
-        animalUserRepository.save(animalUser);
+        // update fields (dirty checking)
+        animalUser.setBreed(breed);
+        animalUser.setGender(gender);
+        animalUser.setAge(age);
+        animalUser.setDetail(detail);
+        animalUser.setImage(imageUrl);
+        animalUser.setUpdatedAt(new Timestamp(System.currentTimeMillis()));
     }
 }

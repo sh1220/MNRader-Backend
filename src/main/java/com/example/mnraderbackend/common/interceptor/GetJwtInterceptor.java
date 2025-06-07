@@ -1,6 +1,7 @@
 package com.example.mnraderbackend.common.interceptor;
 
-import com.example.mnraderbackend.common.exception.JwtException;
+import com.example.mnraderbackend.common.exception.jwt.JwtNoTokenException;
+import com.example.mnraderbackend.common.exception.jwt.JwtUnsupportedTokenException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -40,10 +41,10 @@ public class GetJwtInterceptor implements HandlerInterceptor {
 
     private void validateToken(String token) {
         if (token == null) {
-            throw new JwtException(TOKEN_NOT_FOUND);
+            throw new JwtNoTokenException(TOKEN_NOT_FOUND);
         }
         if (!token.startsWith(JWT_TOKEN_PREFIX)) {
-            throw new JwtException(UNSUPPORTED_TOKEN_TYPE);
+            throw new JwtUnsupportedTokenException(UNSUPPORTED_TOKEN_TYPE);
         }
     }
 

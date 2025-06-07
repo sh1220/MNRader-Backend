@@ -6,6 +6,9 @@ import com.example.mnraderbackend.common.convert.status.Status;
 import com.example.mnraderbackend.common.convert.status.StatusConverter;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.sql.Timestamp;
 
@@ -14,6 +17,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
+@EntityListeners(AuditingEntityListener.class)
 public class AnimalUser {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,9 +35,11 @@ public class AnimalUser {
     @Convert(converter = StatusConverter.class)
     private Status status; // LOST(1), PROTECTED(2), SIGHTING(3)
 
+    @CreatedDate
     @Column(nullable = false)
     private Timestamp createdAt;
 
+    @LastModifiedDate
     @Column(nullable = false)
     private Timestamp updatedAt;
 

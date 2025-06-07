@@ -33,22 +33,17 @@ public class S3ImageService {
     @Value("${cloud.aws.region.static}")
     private String region;
 
-    private static final String PROFILE_IMG_DIR = "profile/";
-    private static final String DEBATE_IMG_DIR = "debate/";
+    private static final String ANIMAL_IMG_DIR = "animal/";
 
-    public String saveDebateImg(MultipartFile uploadFile) {
-        return saveImg(uploadFile, DEBATE_IMG_DIR);
-    }
-
-    public String saveProfileImg(MultipartFile uploadFile) {
+    public String saveAnimalImg(MultipartFile uploadFile) {
         validateUploadFile(uploadFile);
-        return saveImg(uploadFile, PROFILE_IMG_DIR);
+        return saveImg(uploadFile, ANIMAL_IMG_DIR);
     }
 
     private String saveImg(MultipartFile uploadFile, String dir) {
         if (uploadFile.isEmpty()) {
             log.debug("Upload file is empty");
-            throw new UserException(INVALID_PROFILE_IMG);
+            throw new UserException(INVALID_IMG);
         }
 
         String fileName = dir + UUID.randomUUID() + uploadFile.getOriginalFilename();

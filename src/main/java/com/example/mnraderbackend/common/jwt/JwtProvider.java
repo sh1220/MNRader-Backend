@@ -30,7 +30,7 @@ public class JwtProvider {
     private long JWT_REFRESH_EXPIRED_IN;
 
     public String createToken(String principal, long userId) {
-        log.info("JWT key={}", JWT_SECRET_KEY);
+        log.info("Creating JWT token...");
 
         Claims claims = Jwts.claims().setSubject(principal);
         Date now = new Date();

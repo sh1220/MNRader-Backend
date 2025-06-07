@@ -24,6 +24,8 @@ public enum BaseExceptionResponseStatus implements ResponseStatus {
     MY_UPDATE_ALARM_SUCCESS(1201, HttpStatus.OK.value(), "알림 설정에 성공하였습니다."),
     MY_UPDATE_EMAIL_SUCCESS(1202, HttpStatus.OK.value(), "이메일 설정에 성공하였습니다."),
     MY_UPDATE_CITY_SUCCESS(1203, HttpStatus.OK.value(), "지역 설정에 성공하였습니다."),
+    // 1300: 토큰
+    FCM_TOKEN_POST_SUCCESS(1301, HttpStatus.OK.value(), "FCM 토큰 등록에 성공하였습니다."),
 
     /**
      * 2000: Request 오류 (BAD_REQUEST)
@@ -46,6 +48,13 @@ public enum BaseExceptionResponseStatus implements ResponseStatus {
     //4000: 회원가입 & 로그인실패
     SIGNUP_FAIL(4001, HttpStatus.NOT_FOUND.value(),  "회원가입에 실패하였습니다."),
     SIGNIN_FAIL(4002, HttpStatus.NOT_FOUND.value(),  "로그인에 실패하였습니다."),
+    INVALID_USER_VALUE(4003, HttpStatus.BAD_REQUEST.value(), "요청에서 잘못된 값이 존재합니다."),
+    DUPLICATE_EMAIL(4004, HttpStatus.BAD_REQUEST.value(), "이미 존재하는 이메일입니다."),
+    DUPLICATE_NICKNAME(4005, HttpStatus.BAD_REQUEST.value(), "이미 존재하는 닉네임입니다."),
+    EMAIL_NOT_FOUND(4006, HttpStatus.BAD_REQUEST.value(), "존재하지 않는 이메일입니다."),
+    USER_NOT_FOUND(4007, HttpStatus.BAD_REQUEST.value(), "존재하지 않는 회원입니다."),
+    PASSWORD_NO_MATCH(4008, HttpStatus.BAD_REQUEST.value(), "비밀번호가 일치하지 않습니다."),
+
     // 4100: 페이지 조회 실패
     HOME_FAIL(4101, HttpStatus.NOT_FOUND.value(),  "홈 페이지 조회에 실패하였습니다."),
     ALARM_FAIL(4102, HttpStatus.NOT_FOUND.value(),  "알림 페이지 조회에 실패하였습니다."),
@@ -56,13 +65,24 @@ public enum BaseExceptionResponseStatus implements ResponseStatus {
     MY_UPDATE_ALARM_FAIL(4201, HttpStatus.NOT_FOUND.value(), "알림 설정에 실패하였습니다."),
     MY_UPDATE_EMAIL_FAIL(4202, HttpStatus.NOT_FOUND.value(), "이메일 설정에 실패하였습니다."),
     MY_UPDATE_CITY_FAIL(4203, HttpStatus.NOT_FOUND.value(), "지역 설정에 실패하였습니다."),
+    // 4300: 토큰
+    FCM_TOKEN_POST_FAIL(4301, HttpStatus.NOT_FOUND.value(), "FCM 토큰 등록에 실패하였습니다."),
+    // 4400 : image
+    INVALID_IMG(4401,HttpStatus.BAD_REQUEST.value(), "잘못된 이미지 파일입니다."),
+    UPLOAD_FAIL(4402,HttpStatus.BAD_REQUEST.value(), "파일 업로드에 실패했습니다. 인터넷 연결을 확인하거나, 나중에 다시 시도해 주세요."),
+    INVALID_USER_DB_VALUE(4403,HttpStatus.BAD_REQUEST.value(), "유저 정보에 오류가 발생했습니다. 관리자에게 문의해주세요."),
+    NULL_USER_VALUE(4404,HttpStatus.BAD_REQUEST.value(), "요청에 필요한 값이 존재하지 않습니다."),
+    EMPTY_USER_VALUE(4405,HttpStatus.BAD_REQUEST.value(), "요청에 필요한 값이 비어있습니다."),
+    // 4500: region
+    REGION_NOT_FOUND(4501, HttpStatus.NOT_FOUND.value(), "존재하지 않는 지역입니다."),
 
     /**
-     * 5000: 토큰 오류
+     * 5000: Authorization 오류
      */
-
-    TOKEN_NOT_FOUND(5001, HttpStatus.BAD_REQUEST.value(), "토큰이 HTTP Header에 없습니다."),
-    UNSUPPORTED_TOKEN_TYPE(5002, HttpStatus.BAD_REQUEST.value(), "지원되지 않는 토큰 형식입니다."),
+    INVALID_TOKEN(5001, HttpStatus.UNAUTHORIZED.value(), "유효하지 않은 토큰입니다."),
+    MALFORMED_TOKEN(5002, HttpStatus.UNAUTHORIZED.value(), "토큰이 올바르게 구성되지 않았습니다."),
+    TOKEN_NOT_FOUND(5003, HttpStatus.BAD_REQUEST.value(), "토큰이 HTTP Header에 없습니다."),
+    UNSUPPORTED_TOKEN_TYPE(5004, HttpStatus.BAD_REQUEST.value(), "지원되지 않는 토큰 형식입니다."),
 
 
     /**

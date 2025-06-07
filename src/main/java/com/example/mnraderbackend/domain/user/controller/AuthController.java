@@ -24,7 +24,7 @@ import static com.example.mnraderbackend.common.util.BindingResultUtils.getError
 @RequestMapping("/auth")
 public class AuthController {
 
-    @Autowired
+    
     private final AuthService authService;
 
 //    @PostMapping("/refresh")

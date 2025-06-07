@@ -12,4 +12,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     // 1. Region ID로 조회하는 버전 (옵션)
     @Query("SELECT u.fcmToken FROM User u WHERE u.region.id = :regionId AND u.fcmToken IS NOT NULL")
     List<String> findFcmTokensByRegionId(@Param("regionId") Long regionId);
+    boolean existsByEmail(String email);
+    Optional<User> findByEmail(String email);
+    Optional<User> findById(Long id);
 }

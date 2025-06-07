@@ -20,6 +20,7 @@ public enum AnimalType {
                 return animalType;
             }
         }
+        System.out.println("잘못된 animal code: " + code);
         throw new IllegalArgumentException("알 수 없는 animal code 입니다." + code);
     }
 }

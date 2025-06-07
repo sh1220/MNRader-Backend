@@ -60,6 +60,13 @@ public enum BaseExceptionResponseStatus implements ResponseStatus {
     MY_UPDATE_CITY_FAIL(4203, HttpStatus.NOT_FOUND.value(), "지역 설정에 실패하였습니다."),
     // 4300: 토큰
     FCM_TOKEN_POST_FAIL(4301, HttpStatus.NOT_FOUND.value(), "FCM 토큰 등록에 실패하였습니다."),
+    // 4400 : image
+    INVALID_PROFILE_IMG(4401,HttpStatus.BAD_REQUEST.value(), "잘못된 이미지 파일입니다."),
+    UPLOAD_FAIL(4402,HttpStatus.BAD_REQUEST.value(), "파일 업로드에 실패했습니다. 인터넷 연결을 확인하거나, 나중에 다시 시도해 주세요."),
+    INVALID_USER_DB_VALUE(4403,HttpStatus.BAD_REQUEST.value(), "유저 정보에 오류가 발생했습니다. 관리자에게 문의해주세요."),
+    NULL_USER_VALUE(4404,HttpStatus.BAD_REQUEST.value(), "요청에 필요한 값이 존재하지 않습니다."),
+    EMPTY_USER_VALUE(4405,HttpStatus.BAD_REQUEST.value(), "요청에 필요한 값이 비어있습니다.."),
+
     /**
      * 5000: 토큰 오류
      */

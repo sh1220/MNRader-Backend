@@ -15,7 +15,6 @@ public class Breed {
     @Id
     private Long id;
 
-    // animal로 수정
     @Column(name = "animal_type", nullable = false)
     @Convert(converter = AnimalTypeConverter.class)
     private AnimalType animalType;

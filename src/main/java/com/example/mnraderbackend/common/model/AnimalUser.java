@@ -48,9 +48,6 @@ public class AnimalUser {
     @Convert(converter = GenderConverter.class)
     private Gender gender; // MALE(1), FEMALE(2), UNKNOWN(3)
 
-    @Column(nullable = false)
-    private Integer age; // 나이 (개월 단위)
-
     @Column(columnDefinition = "TEXT")
     private String detail;
 

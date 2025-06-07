@@ -1,11 +1,15 @@
 package com.example.mnraderbackend.controller;
 
+import com.example.mnraderbackend.dto.AnimalUserResponse;
+import com.example.mnraderbackend.dto.BaseResponse;
 import com.example.mnraderbackend.service.AnimalUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -14,11 +18,20 @@ public class AnimalUserController {
 
     private final AnimalUserService animalUserService;
 
+    @GetMapping("/by-email")
+    public ResponseEntity<BaseResponse<List<AnimalUserResponse>>> getAnimalUsersByEmail(
+            @RequestParam String email) {
+        List<AnimalUserResponse> animals = animalUserService.getAnimalUsersByEmail(email);
+        return ResponseEntity.status(200).body(
+                new BaseResponse<>(2002, 200, "조회 성공!", animals)
+        );
+    }
+
     @PatchMapping(
             value = "/{animalId}",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
-    public ResponseEntity<Void> updateAnimalUser(
+    public ResponseEntity<BaseResponse<AnimalUserResponse>> updateAnimalUser(
             @PathVariable Long animalId,
             @RequestParam("animal") Integer animal,
             @RequestParam("breed") String breed,
@@ -28,7 +41,9 @@ public class AnimalUserController {
             @RequestPart(value = "img", required = false) MultipartFile img
 
     ){
-        animalUserService.updateAnimalUser(animalId, animal, breed, gender, age, detail, img);
-        return ResponseEntity.ok().build();
+        var updated = animalUserService.updateAnimalUser(animalId, animal, breed, gender, age, detail, img);
+        return ResponseEntity.status(201).body(
+                new BaseResponse<>(2002, 201, "저장 성공!", AnimalUserResponse.from(updated))
+        );
     }
 }

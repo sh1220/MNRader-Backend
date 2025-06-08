@@ -1,5 +1,6 @@
 package com.example.mnraderbackend.common.response;
 
+import com.example.mnraderbackend.common.response.status.BaseExceptionResponseStatus;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Builder;
@@ -33,6 +34,15 @@ public class BaseResponse<T> implements ResponseStatus {
         this.message = responseStatus.getMessage();
         this.result = result;
     }
+
+    // enum 기반 커스텀 응답 생산자
+    public BaseResponse(BaseExceptionResponseStatus status, T result) {
+        this.code = status.getCode();
+        this.status = status.getStatus();
+        this.message = status.getMessage();
+        this.result = result;
+    }
+
 
     @Override
     public int getCode() {

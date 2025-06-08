@@ -23,12 +23,15 @@ public class AnimalUserService {
     private final AnimalUserRepository animalUserRepository;
     private final BreedRepository breedRepository;
 
-    public List<AnimalUserResponse> getAnimalUsersByEmail(String email) {
-        List<AnimalUser> animals = animalUserRepository.findByUserEmail(email);
-        return animals.stream()
-                .map(AnimalUserResponse::from)
-                .collect(Collectors.toList());
-    }
+    // 제가 구현하는 부분이 아닌것 같아서 주석처리했습니다
+    // 확인되면 merge 전에 삭제 하겠습니다.
+
+    //    public List<AnimalUserResponse> getAnimalUsersByEmail(String email) {
+//        List<AnimalUser> animals = animalUserRepository.findByUserEmail(email);
+//        return animals.stream()
+//                .map(AnimalUserResponse::from)
+//                .collect(Collectors.toList());
+//    }
 
     public AnimalUser updateAnimalUser(Long animalId,
                                  Integer animal,

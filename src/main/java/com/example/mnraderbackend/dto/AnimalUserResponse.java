@@ -4,10 +4,12 @@ package com.example.mnraderbackend.dto;
 import com.example.mnraderbackend.common.convert.animal_type.AnimalType;
 import com.example.mnraderbackend.common.model.AnimalUser;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
+@Builder
 public class AnimalUserResponse {
     private Long id;
     private AnimalType animal;
@@ -18,14 +20,16 @@ public class AnimalUserResponse {
     private String img;
 
     public static AnimalUserResponse from(AnimalUser entity) {
-        return new AnimalUserResponse(
-                entity.getId(),
-                entity.getBreed().getAnimalType(),
-                entity.getBreed().getBreed(),
-                entity.getGender().getCode(),
-                entity.getAge(),
-                entity.getDetail(),
-                entity.getImage()
-        );
+        return AnimalUserResponse.builder()
+                .id(entity.getId())
+                .animal(entity.getBreed().getAnimalType())
+                .breed(entity.getBreed().getBreed())
+                .gender(entity.getGender().getCode())
+                .age(entity.getAge())
+                .detail(entity.getDetail())
+                .img(entity.getImage())
+                .build();
     }
+
+
 }

@@ -1,7 +1,8 @@
 package com.example.mnraderbackend.controller;
 
+import com.example.mnraderbackend.common.response.BaseResponse;
+import com.example.mnraderbackend.common.response.status.BaseExceptionResponseStatus;
 import com.example.mnraderbackend.dto.AnimalUserResponse;
-import com.example.mnraderbackend.dto.BaseResponse;
 import com.example.mnraderbackend.service.AnimalUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
@@ -18,14 +19,17 @@ public class AnimalUserController {
 
     private final AnimalUserService animalUserService;
 
-    @GetMapping("/by-email")
-    public ResponseEntity<BaseResponse<List<AnimalUserResponse>>> getAnimalUsersByEmail(
-            @RequestParam String email) {
-        List<AnimalUserResponse> animals = animalUserService.getAnimalUsersByEmail(email);
-        return ResponseEntity.status(200).body(
-                new BaseResponse<>(2002, 200, "조회 성공!", animals)
-        );
-    }
+    // 제가 구현하는 부분이 아닌것 같아서 주석처리했습니다
+    // 확인되면 merge 전에 삭제 하겠습니다.
+
+//    @GetMapping("/by-email")
+//    public ResponseEntity<BaseResponse<List<AnimalUserResponse>>> getAnimalUsersByEmail(
+//            @RequestParam String email) {
+//        List<AnimalUserResponse> animals = animalUserService.getAnimalUsersByEmail(email);
+//        return ResponseEntity.status(200).body(
+//                new BaseResponse<>(2002, 200, "조회 성공!", animals)
+//        );
+//    }
 
     @PatchMapping(
             value = "/{animalId}",
@@ -41,9 +45,15 @@ public class AnimalUserController {
             @RequestPart(value = "img", required = false) MultipartFile img
 
     ){
-        var updated = animalUserService.updateAnimalUser(animalId, animal, breed, gender, age, detail, img);
-        return ResponseEntity.status(201).body(
-                new BaseResponse<>(2002, 201, "저장 성공!", AnimalUserResponse.from(updated))
-        );
+        try {
+            var updated = animalUserService.updateAnimalUser(animalId, animal, breed, gender, age, detail, img);
+
+            return ResponseEntity.status(BaseExceptionResponseStatus.MY_UPDATE_ANIMAL_SUCCESS.getStatus())
+                    .body(new BaseResponse<>(BaseExceptionResponseStatus.MY_UPDATE_ANIMAL_SUCCESS, AnimalUserResponse.from(updated)));
+
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(BaseExceptionResponseStatus.MY_UPDATE_ANIMAL_FAIL.getStatus())
+                    .body(new BaseResponse<>(BaseExceptionResponseStatus.MY_UPDATE_ANIMAL_FAIL, null));
+        }
     }
 }

@@ -30,4 +30,6 @@ public class AnimalUserResponse {
                 .img(entity.getImage())
                 .build();
     }
+
+
 }

@@ -1,17 +1,21 @@
 package com.example.mnraderbackend.service;
-
+import com.example.mnraderbackend.common.convert.animal_type.AnimalType;
 import com.example.mnraderbackend.common.convert.gender.Gender;
+import com.example.mnraderbackend.common.convert.status.Status;
 import com.example.mnraderbackend.common.model.AnimalUser;
 import com.example.mnraderbackend.common.model.Breed;
+import com.example.mnraderbackend.common.model.User;
 import com.example.mnraderbackend.dto.AnimalUserResponse;
 import com.example.mnraderbackend.repository.AnimalUserRepository;
 import com.example.mnraderbackend.repository.BreedRepository;
+import com.example.mnraderbackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,6 +26,7 @@ public class AnimalUserService {
 
     private final AnimalUserRepository animalUserRepository;
     private final BreedRepository breedRepository;
+    private final UserRepository userRepository;
 
     public List<AnimalUserResponse> getAnimalUsersByEmail(String email) {
         List<AnimalUser> animals = animalUserRepository.findByUserEmail(email);
@@ -65,4 +70,43 @@ public class AnimalUserService {
 
         return animalUser;
     }
+
+    public void createAnimalUser(
+            Integer animal,
+            String breedName,
+            Integer genderCode,
+            String name,
+            Integer age,
+            String detail,
+            Integer statusCode,
+            MultipartFile image
+    ) {
+        // 임시 테스트 사용자
+        User user = userRepository.findByEmail("123@konkuk.ac.kr")
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        AnimalType animalType = AnimalType.fromCode(animal);
+
+
+        Breed breed = breedRepository.findByAnimalTypeAndBreed(animalType, breedName)
+                .orElseThrow(() -> new IllegalArgumentException("Breed not found"));
+
+        Status status = Status.fromCode(statusCode); // enum 매핑
+
+        AnimalUser newPet = AnimalUser.builder()
+                .user(user)
+                .breed(breed)
+                .gender(Gender.fromCode(genderCode))
+                .name(name)
+                .age(age)
+                .detail(detail)
+                .status(status)
+                .image(image != null ? image.getOriginalFilename() : null) // 실제 업로드 로직 없음
+                .createdAt(Timestamp.valueOf(LocalDateTime.now()))
+                .updatedAt(Timestamp.valueOf(LocalDateTime.now()))
+                .build();
+
+        animalUserRepository.save(newPet);
+    }
+
 }

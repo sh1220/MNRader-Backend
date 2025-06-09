@@ -50,4 +50,8 @@ public class AnimalUser {
 
     @Column(columnDefinition = "TEXT")
     private String image;
+
+    // name 없어서 추가
+    @Column(nullable = false, length = 40)
+    private String name;
 }

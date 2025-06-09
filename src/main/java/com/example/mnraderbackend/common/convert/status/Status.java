@@ -6,8 +6,8 @@ import lombok.Getter;
 public enum Status {
     ACTIVE(1),       // 1로 매핑 수락
     INACTIVE(2),     // 2로 매핑 거절
-    SUSPENDED(3);    // 3로 매핑 응답대기
-
+    SUSPENDED(3),    // 3로 매핑 응답대기
+    NONE(4); // 아무 상태 아님
     private final int code;
 
     Status(int code) {

@@ -46,4 +46,29 @@ public class AnimalUserController {
                 new BaseResponse<>(2002, 201, "저장 성공!", AnimalUserResponse.from(updated))
         );
     }
+
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> createAnimalUser(
+            @RequestPart("animal") String animal,
+            @RequestPart("breed") String breed,
+            @RequestPart("gender") String gender,
+            @RequestPart("name") String name,
+            @RequestPart("age") String age,
+            @RequestPart("detail") String detail,
+            @RequestPart("status") String status, // 추가
+            @RequestPart(value = "img", required = false) MultipartFile img
+    ) {
+        animalUserService.createAnimalUser(
+                Integer.parseInt(animal),
+                breed,
+                Integer.parseInt(gender),
+                name,
+                Integer.parseInt(age),
+                detail,
+                Integer.parseInt(status), // 추가
+                img
+        );
+        return ResponseEntity.ok().build();
+    }
+
 }

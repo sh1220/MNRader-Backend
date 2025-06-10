@@ -33,6 +33,8 @@ public enum BaseExceptionResponseStatus implements ResponseStatus {
     BAD_REQUEST(2000, HttpStatus.BAD_REQUEST.value(), "유효하지 않은 요청입니다."),
     URL_NOT_FOUND(2001, HttpStatus.BAD_REQUEST.value(), "유효하지 않은 URL 입니다."),
     METHOD_NOT_ALLOWED(2002, HttpStatus.METHOD_NOT_ALLOWED.value(), "해당 URL에서는 지원하지 않는 HTTP Method 입니다."),
+    INVALID_PARAMETER(2003, HttpStatus.BAD_REQUEST.value(), "요청 파라미터가 유효하지 않습니다."),
+    INVALID_REQUEST_BODY(2004, HttpStatus.BAD_REQUEST.value(), "요청 본문이 유효하지 않습니다."),
 
     /**
      * 3000: Server, Database 오류 (INTERNAL_SERVER_ERROR)
@@ -75,7 +77,11 @@ public enum BaseExceptionResponseStatus implements ResponseStatus {
     EMPTY_USER_VALUE(4405,HttpStatus.BAD_REQUEST.value(), "요청에 필요한 값이 비어있습니다."),
     // 4500: region
     REGION_NOT_FOUND(4501, HttpStatus.NOT_FOUND.value(), "존재하지 않는 지역입니다."),
-
+    // 4600: animal
+    ANIMAL_NULL(4601, HttpStatus.BAD_REQUEST.value(), "동물 정보가 존재하지 않습니다."),
+    ANIMAL_NOT_FOUND(4602, HttpStatus.NOT_FOUND.value(), "존재하지 않는 동물입니다."),
+    // 4700 : Alarm
+    ALARM_NULL(4701, HttpStatus.BAD_REQUEST.value(), "알림 정보가 존재하지 않습니다."),
     /**
      * 5000: Authorization 오류
      */
@@ -83,6 +89,8 @@ public enum BaseExceptionResponseStatus implements ResponseStatus {
     MALFORMED_TOKEN(5002, HttpStatus.UNAUTHORIZED.value(), "토큰이 올바르게 구성되지 않았습니다."),
     TOKEN_NOT_FOUND(5003, HttpStatus.BAD_REQUEST.value(), "토큰이 HTTP Header에 없습니다."),
     UNSUPPORTED_TOKEN_TYPE(5004, HttpStatus.BAD_REQUEST.value(), "지원되지 않는 토큰 형식입니다."),
+    EXPIRED_TOKEN(5005, HttpStatus.UNAUTHORIZED.value(), "토큰이 만료되었습니다."),
+    ACCESS_DENIED(5006, HttpStatus.FORBIDDEN.value(), "접근 권한이 없습니다."),
 
 
     /**

@@ -48,7 +48,6 @@ public class AuthController {
      */
     @PostMapping("/login")
     public BaseResponse<LoginResponse> login(@Validated @RequestBody LoginRequest authRequest, BindingResult bindingResult) {
-        log.info("[AuthController.login]");
         if (bindingResult.hasErrors()) {
             throw new AuthException(INVALID_USER_VALUE, getErrorMessages(bindingResult));
         }

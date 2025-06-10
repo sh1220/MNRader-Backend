@@ -16,8 +16,8 @@ public class AuthExceptionControllerAdvice {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST) //해당 메서드의 예외 발생시 보낼
     @ExceptionHandler(AuthException.class)
-    public BaseErrorResponse handle_UserException(AuthException e){
-        log.error("[handle_AuthException]", e);
+    public BaseErrorResponse handle_AuthException(AuthException e){
+        log.error("[handle_AuthException]", e.getMessage());
         return new BaseErrorResponse(e.getExceptionStatus(), e.getMessage());
     }
 }

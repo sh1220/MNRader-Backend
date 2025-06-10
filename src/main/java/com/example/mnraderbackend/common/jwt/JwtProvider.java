@@ -62,21 +62,7 @@ public class JwtProvider {
                 .compact();
     }
 
-    public String createToken_changeEmail(String principal, long userId, String accessToken) {
-        log.info("JWT key={}", JWT_SECRET_KEY);
 
-        Claims claims = Jwts.claims().setSubject(principal);
-        Date now = new Date();
-        Date validity = getValidity(accessToken);
-
-        return Jwts.builder()
-                .setClaims(claims)
-                .setIssuedAt(now)
-                .setExpiration(validity)
-                .claim("userId", userId)
-                .signWith(SignatureAlgorithm.HS256, JWT_SECRET_KEY)
-                .compact();
-    }
 
     public boolean isExpiredToken(String token) throws JwtInvalidTokenException {
         try {

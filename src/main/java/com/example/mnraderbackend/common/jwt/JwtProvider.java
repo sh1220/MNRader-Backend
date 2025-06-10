@@ -62,9 +62,7 @@ public class JwtProvider {
                 .compact();
     }
 
-    public String createToken_changeEmail(String principal, long userId, String accessToken) {
-        log.info("JWT key={}", JWT_SECRET_KEY);
-
+    public String createToken_changeEmail(String principal, long userId, String accessToken){
         Claims claims = Jwts.claims().setSubject(principal);
         Date now = new Date();
         Date validity = getValidity(accessToken);
@@ -102,18 +100,33 @@ public class JwtProvider {
     }
 
     public String getPrincipal(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(JWT_SECRET_KEY).build()
-                .parseClaimsJws(token)
-                .getBody().getSubject();
+        return parseClaims(token).getSubject();
     }
 
     public Date getValidity(String token) {
-        return Jwts.parserBuilder()
-                .setSigningKey(JWT_SECRET_KEY).build()
-                .parseClaimsJws(token)
-                .getBody().getExpiration();
+        return parseClaims(token).getExpiration();
     }
 
+    private Claims parseClaims(String token) {
+        try {
+            return Jwts.parserBuilder()
+                    .setSigningKey(JWT_SECRET_KEY).build()
+                    .parseClaimsJws(token)
+                    .getBody();
+        } catch (ExpiredJwtException e) {
+            throw new JwtInvalidTokenException(EXPIRED_TOKEN);
+        } catch (SignatureException e) {
+            throw new JwtUnauthorizedTokenException(INVALID_TOKEN);
+        } catch (UnsupportedJwtException e) {
+            throw new JwtUnsupportedTokenException(UNSUPPORTED_TOKEN_TYPE);
+        } catch (MalformedJwtException e) {
+            throw new JwtMalformedTokenException(MALFORMED_TOKEN);
+        } catch (IllegalArgumentException e) {
+            throw new JwtInvalidTokenException(INVALID_TOKEN);
+        } catch (JwtException e) {
+            log.error("[JwtTokenProvider.parseClaims]", e);
+            throw e;
+        }
+    }
 
 }

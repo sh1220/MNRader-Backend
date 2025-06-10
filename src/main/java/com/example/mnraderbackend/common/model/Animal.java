@@ -10,7 +10,9 @@ import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -55,7 +57,7 @@ public class Animal {
     private Gender gender;
 
     @Column(nullable = false)
-    private Timestamp occurredAt;
+    private LocalDate occurredAt;
 
     @Column(nullable = false, length = 30)
     private String phone;

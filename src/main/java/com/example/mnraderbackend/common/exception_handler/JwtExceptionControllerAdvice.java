@@ -18,14 +18,14 @@ public class JwtExceptionControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(JwtBadRequestException.class)
     public BaseErrorResponse handle_JwtBadRequestException(JwtBadRequestException e) {
-        log.error("[handle_JwtBadRequestException]", e);
+        log.error("[handle_JwtBadRequestException]", e.getMessage());
         return new BaseErrorResponse(e.getExceptionStatus());
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler(JwtUnauthorizedTokenException.class)
     public BaseErrorResponse handle_JwtUnauthorizedException(JwtUnauthorizedTokenException e) {
-        log.error("[handle_JwtUnauthorizedException]", e);
+        log.error("[handle_JwtUnauthorizedException]", e.getMessage());
         return new BaseErrorResponse(e.getExceptionStatus());
     }
 }

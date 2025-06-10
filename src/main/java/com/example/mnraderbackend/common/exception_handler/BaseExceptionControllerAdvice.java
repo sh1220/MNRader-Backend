@@ -7,17 +7,16 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
-import static com.example.mnraderbackend.common.response.status.BaseExceptionResponseStatus.METHOD_NOT_ALLOWED;
-import static com.example.mnraderbackend.common.response.status.BaseExceptionResponseStatus.URL_NOT_FOUND;
-import static com.example.mnraderbackend.common.response.status.BaseExceptionResponseStatus.SERVER_ERROR;
-import static com.example.mnraderbackend.common.response.status.BaseExceptionResponseStatus.FILE_TOO_LARGE;
+import static com.example.mnraderbackend.common.response.status.BaseExceptionResponseStatus.*;
 
 
 @Slf4j
@@ -27,7 +26,7 @@ public class BaseExceptionControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({BadRequestException.class, NoHandlerFoundException.class, TypeMismatchException.class})
     public BaseErrorResponse handle_BadRequest(Exception e) {
-        log.error("[handle_BadRequest]", e);
+        log.error("[handle_BadRequest]", e.getMessage());
         return new BaseErrorResponse(URL_NOT_FOUND);
     }
 
@@ -35,7 +34,7 @@ public class BaseExceptionControllerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     public BaseErrorResponse handle_HttpRequestMethodNotSupportedException(HttpRequestMethodNotSupportedException e) {
-        log.error("[handle_HttpRequestMethodNotSupportedException]", e);
+        log.error("[handle_HttpRequestMethodNotSupportedException]", e.getMessage());
         return new BaseErrorResponse(METHOD_NOT_ALLOWED);
     }
 
@@ -53,5 +52,17 @@ public class BaseExceptionControllerAdvice {
     public BaseErrorResponse handleMaxSizeException(MaxUploadSizeExceededException e) {
         return new BaseErrorResponse(FILE_TOO_LARGE);
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(MissingServletRequestParameterException.class)
+    public BaseErrorResponse handle_MissingServletRequestParameterException(MissingServletRequestParameterException e) {
+        return new BaseErrorResponse(INVALID_PARAMETER);
+    }
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public BaseErrorResponse handleHttpMessageNotReadableException(HttpMessageNotReadableException ex) {
+        return new BaseErrorResponse(INVALID_REQUEST_BODY);
+    }
+
 
 }

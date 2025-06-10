@@ -33,9 +33,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
 
-
-
-
+    @Transactional
     public LoginResponse login(LoginRequest authRequest) {
 
         String email = authRequest.getEmail();
@@ -103,6 +101,14 @@ public class AuthService {
             throw new AuthException(DUPLICATE_EMAIL);
         }
     }
+
+    // jwt 토큰에서 이메일을 가져와서 유저 아이디를 반환하는 용도
+    public long getUserIdByEmailAndValidate(String email) {
+        return userRepository.findByEmail(email).
+                orElseThrow(() -> new AuthException(INVALID_TOKEN))
+                .getId();
+    }
+
 
 
 //    public RefreshResponse refresh(String refreshToken){

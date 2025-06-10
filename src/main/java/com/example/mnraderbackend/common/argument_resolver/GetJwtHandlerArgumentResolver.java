@@ -17,17 +17,13 @@ public class GetJwtHandlerArgumentResolver implements HandlerMethodArgumentResol
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         boolean hasAnnotation = parameter.hasParameterAnnotation(PreAccessToken.class);
-        log.debug(Arrays.toString(parameter.getParameterAnnotations()));
-        boolean hasType = long.class.isAssignableFrom(parameter.getParameterType())
-                || Long.class.isAssignableFrom(parameter.getParameterType());
-        log.info("hasAnnotation={}, hasType={}, hasAnnotation && hasType={}", hasAnnotation, hasType, hasAnnotation&&hasType);
+        boolean hasType = String.class.isAssignableFrom(parameter.getParameterType());
         return hasAnnotation && hasType;
     }
 
     @Override
     public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
         HttpServletRequest request = (HttpServletRequest) webRequest.getNativeRequest();
-        log.info("accessToken={}", request.getAttribute("accessToken"));
         return request.getAttribute("accessToken");
 
     }

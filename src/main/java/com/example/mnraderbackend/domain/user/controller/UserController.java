@@ -1,5 +1,6 @@
 package com.example.mnraderbackend.domain.user.controller;
 
+import com.example.mnraderbackend.common.argument_resolver.PreAccessToken;
 import com.example.mnraderbackend.common.argument_resolver.PreAuthorize;
 import com.example.mnraderbackend.common.exception.UserException;
 import com.example.mnraderbackend.common.response.BaseResponse;
@@ -37,7 +38,6 @@ public class UserController {
     }
 
 
-
     @GetMapping("/alarm")
     public BaseResponse<AlarmResponse> alarm(
             @PreAuthorize Long userId,
@@ -45,7 +45,6 @@ public class UserController {
     ) {
         return new BaseResponse<>(ALARM_SUCCESS, userService.alarm(userId, lastAnimalId));
     }
-
 
 
     @GetMapping("/my/page")
@@ -62,17 +61,35 @@ public class UserController {
     public BaseResponse<MyScrapResponse> myScrap(@PreAuthorize Long userId) {
         return new BaseResponse<>(MY_SCRAP_SUCCESS, userService.myScrap(userId));
     }
+
     @PatchMapping("/my/email")
-    public BaseResponse<Object> changeEmail(
+    public BaseResponse<MyEmailResponse> changeEmail(
             @PreAuthorize long userId,
-            @Validated @RequestBody MyEmailRequest emailRequest,
+            @PreAccessToken String accessToken,
+            @Validated @RequestBody MyEmailRequest myEmailRequest,
             BindingResult bindingResult
-    ){
+    ) {
         if (bindingResult.hasErrors()) {
             throw new UserException(INVALID_USER_VALUE, getErrorMessages(bindingResult));
         }
-        userService.changeEmail(userId, emailRequest.getEmail());
-        return new BaseResponse<>(MY_UPDATE_EMAIL_SUCCESS);
+
+        return new BaseResponse<>(
+                MY_UPDATE_EMAIL_SUCCESS,
+                userService.changeEmail(userId, myEmailRequest.getEmail(), accessToken, myEmailRequest.getRefreshToken())
+        );
+    }
+
+    @PatchMapping("/my/city")
+    public BaseResponse<Object> changeCity(
+            @PreAuthorize Long userId,
+            @Validated @RequestBody MyRegionRequest myRegionRequest,
+            BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors()) {
+            throw new UserException(INVALID_USER_VALUE, getErrorMessages(bindingResult));
+        }
+        userService.changeCity(userId, myRegionRequest.getCity());
+        return new BaseResponse<>(MY_UPDATE_REGION_SUCCESS);
     }
 
 

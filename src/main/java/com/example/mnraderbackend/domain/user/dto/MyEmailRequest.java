@@ -13,4 +13,7 @@ public class MyEmailRequest {
     @NotBlank(message = "email: {NotBlank}")
     private String email;
 
+    @NotBlank(message = "refreshToken: {NotBlank}")
+    private String refreshToken;
+
 }

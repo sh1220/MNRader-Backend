@@ -4,21 +4,25 @@ import com.example.mnraderbackend.common.argument_resolver.PreAuthorize;
 import com.example.mnraderbackend.common.exception.AlarmException;
 import com.example.mnraderbackend.common.exception.AnimalException;
 import com.example.mnraderbackend.common.exception.AuthException;
+import com.example.mnraderbackend.common.jwt.JwtProvider;
 import com.example.mnraderbackend.common.model.Animal;
 import com.example.mnraderbackend.common.model.AnimalUser;
+import com.example.mnraderbackend.common.model.Region;
 import com.example.mnraderbackend.common.model.User;
-import com.example.mnraderbackend.common.response.status.ResponseStatus;
 import com.example.mnraderbackend.domain.animal.AnimalRepository;
 import com.example.mnraderbackend.domain.animalUser.AnimalUserRepository;
+import com.example.mnraderbackend.domain.region.RegionRepository;
 import com.example.mnraderbackend.domain.user.dto.*;
 import com.example.mnraderbackend.domain.user.repository.ScrapRepository;
 import com.example.mnraderbackend.domain.user.repository.UserRepository;
 import com.google.firebase.messaging.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 import static com.example.mnraderbackend.common.response.status.BaseExceptionResponseStatus.*;
@@ -30,7 +34,9 @@ public class UserService {
     private final UserRepository userRepository;
     private final AnimalRepository animalRepository;
     private final AnimalUserRepository animalUserRepository;
+    private final RegionRepository regionRepository;
     private final ScrapRepository scrapRepository;
+    private final JwtProvider jwtProvider;
 
     @Transactional
     public void registerFcmToken(Long userId, String fcmToken) {
@@ -199,14 +205,32 @@ public class UserService {
     }
 
     @Transactional
-    public void changeEmail(long userId, String email) {
+    public MyEmailResponse changeEmail(long userId, String email, String accessToken, @NotBlank(message = "refreshToken: {NotBlank}") String refreshToken) {
         User user = getUser(userId);
         // 이메일 중복 확인
         if (userRepository.existsByEmail(email)) {
             throw new AuthException(DUPLICATE_EMAIL);
         }
-        // 이메일 변경
         user.setEmail(email);
+
+        String new_accessToken = jwtProvider.createToken_changeEmail(email, userId, accessToken);
+        String new_refreshToken = jwtProvider.createToken_changeEmail(email, userId, refreshToken);
+        user.setRefreshToken(new_refreshToken);
+        // 이메일 변경
+        userRepository.save(user);
+        return MyEmailResponse.builder()
+                .accessToken(new_accessToken)
+                .refreshToken(new_refreshToken)
+                .build();
+
+    }
+
+    @Transactional
+    public void changeCity(long userId, Long city) {
+        User user = getUser(userId);
+        Region region = regionRepository.findById(city)
+                .orElseThrow(() -> new AuthException(REGION_NOT_FOUND));
+        user.setRegion(region);
         userRepository.save(user);
 
     }

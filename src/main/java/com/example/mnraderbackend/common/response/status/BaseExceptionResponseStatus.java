@@ -69,6 +69,7 @@ public enum BaseExceptionResponseStatus implements ResponseStatus {
     MY_UPDATE_REGION_FAIL(4203, HttpStatus.NOT_FOUND.value(), "지역 설정에 실패하였습니다."),
     // 4300: 토큰
     FCM_TOKEN_POST_FAIL(4301, HttpStatus.NOT_FOUND.value(), "FCM 토큰 등록에 실패하였습니다."),
+    FCM_TOKEN_NULL_FAIL(4302, HttpStatus.NOT_FOUND.value(), "FCM 토큰이 유효하지 않습니다."),
     // 4400 : image
     INVALID_IMG(4401,HttpStatus.BAD_REQUEST.value(), "잘못된 이미지 파일입니다."),
     UPLOAD_FAIL(4402,HttpStatus.BAD_REQUEST.value(), "파일 업로드에 실패했습니다. 인터넷 연결을 확인하거나, 나중에 다시 시도해 주세요."),
@@ -80,6 +81,7 @@ public enum BaseExceptionResponseStatus implements ResponseStatus {
     // 4600: animal
     ANIMAL_NULL(4601, HttpStatus.BAD_REQUEST.value(), "동물 정보가 존재하지 않습니다."),
     ANIMAL_NOT_FOUND(4602, HttpStatus.NOT_FOUND.value(), "존재하지 않는 동물입니다."),
+    BREED_NOT_FOUND(4603, HttpStatus.NOT_FOUND.value(), "존재하지 않는 품종입니다."),
     // 4700 : Alarm
     ALARM_NULL(4701, HttpStatus.BAD_REQUEST.value(), "알림 정보가 존재하지 않습니다."),
     /**

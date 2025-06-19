@@ -29,22 +29,37 @@ public class UserController {
         userService.registerFcmToken(userId, request.getFcmToken());
         return new BaseResponse<>(FCM_TOKEN_POST_SUCCESS);
     }
-
-    @GetMapping("/home")
-    public BaseResponse<HomeResponse> home(
-            @PreAuthorize Long userId
-    ) {
-        return new BaseResponse<>(HOME_SUCCESS, userService.home(userId));
-    }
-
-
     @GetMapping("/alarm")
-    public BaseResponse<AlarmResponse> alarm(
+    public BaseResponse<AlarmResponse> getAlarmPage(
             @PreAuthorize Long userId,
             @RequestParam("last") Long lastAnimalId
     ) {
-        return new BaseResponse<>(ALARM_SUCCESS, userService.alarm(userId, lastAnimalId));
+        return new BaseResponse<>(ALARM_SUCCESS, userService.getAlarmPage(userId, lastAnimalId));
     }
+
+    @PatchMapping("/alarm")
+    public BaseResponse<Object> changeAlarmSetting(
+            @PreAuthorize Long userId,
+            @Validated @RequestBody AlarmRequest alarmRequest,
+            BindingResult bindingResult
+    ) {
+        if (bindingResult.hasErrors()) {
+            throw new UserException(INVALID_USER_VALUE, getErrorMessages(bindingResult));
+        }
+        userService.changeAlarmSetting(userId, alarmRequest.getEnabled(), alarmRequest.getFcmToken());
+        return new BaseResponse<>(MY_UPDATE_ALARM_SUCCESS);
+    }
+
+    @GetMapping("/home")
+    public BaseResponse<HomeResponse> home(
+            @PreAuthorize Long userId,
+            @RequestParam(required = false) Long breed,
+            @RequestParam(required = false) Long city
+    ) {
+        return new BaseResponse<>(HOME_SUCCESS, userService.home(userId, breed, city));
+    }
+
+
 
 
     @GetMapping("/my/page")

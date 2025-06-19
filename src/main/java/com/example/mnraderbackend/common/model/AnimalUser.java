@@ -4,6 +4,8 @@ import com.example.mnraderbackend.common.convert.gender.Gender;
 import com.example.mnraderbackend.common.convert.gender.GenderConverter;
 import com.example.mnraderbackend.common.convert.status.Status;
 import com.example.mnraderbackend.common.convert.status.StatusConverter;
+import com.example.mnraderbackend.common.convert.statusAnimal.StatusAnimal;
+import com.example.mnraderbackend.common.convert.statusAnimal.StatusAnimalConverter;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
@@ -32,8 +34,8 @@ public class AnimalUser {
     private User user;
 
     @Column(nullable = false)
-    @Convert(converter = StatusConverter.class)
-    private Status status; // LOST(1), PROTECTED(2), SIGHTING(3)
+    @Convert(converter = StatusAnimalConverter.class)
+    private StatusAnimal status; // LOST(1), PROTECTED(2), SIGHTING(3)
 
     @CreatedDate
     @Column(nullable = false)

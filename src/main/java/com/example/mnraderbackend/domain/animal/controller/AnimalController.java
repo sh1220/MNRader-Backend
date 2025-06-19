@@ -8,7 +8,6 @@ import com.example.mnraderbackend.common.response.BaseResponse;
 import com.example.mnraderbackend.domain.animal.dto.AnimalDetailResponse;
 import com.example.mnraderbackend.domain.animal.dto.AnimalRegisterRequest;
 import com.example.mnraderbackend.domain.animal.service.AnimalService;
-import com.example.mnraderbackend.domain.user.dto.*;
 import com.example.mnraderbackend.domain.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.BindingResult;

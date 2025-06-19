@@ -5,7 +5,6 @@ import com.example.mnraderbackend.common.exception.AnimalException;
 import com.example.mnraderbackend.common.exception.AnimalUserException;
 import com.example.mnraderbackend.common.response.BaseResponse;
 import com.example.mnraderbackend.domain.animal.dto.AnimalDetailResponse;
-import com.example.mnraderbackend.domain.animal.dto.AnimalRegisterRequest;
 import com.example.mnraderbackend.domain.animal.service.AnimalService;
 import com.example.mnraderbackend.domain.animalUser.dto.AnimalUserRegisterRequest;
 import com.example.mnraderbackend.domain.animalUser.dto.AnimalUserResponse;

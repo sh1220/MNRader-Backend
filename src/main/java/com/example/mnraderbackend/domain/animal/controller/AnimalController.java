@@ -4,6 +4,7 @@ import com.example.mnraderbackend.common.argument_resolver.PreAccessToken;
 import com.example.mnraderbackend.common.argument_resolver.PreAuthorize;
 import com.example.mnraderbackend.common.exception.AnimalException;
 import com.example.mnraderbackend.common.exception.UserException;
+import com.example.mnraderbackend.common.model.Region;
 import com.example.mnraderbackend.common.response.BaseResponse;
 import com.example.mnraderbackend.domain.animal.dto.AnimalDetailResponse;
 import com.example.mnraderbackend.domain.animal.dto.AnimalRegisterRequest;
@@ -24,6 +25,7 @@ import static com.example.mnraderbackend.common.util.BindingResultUtils.getError
 public class AnimalController {
 
     private final AnimalService animalService;
+    private final UserService userService;
 
 
     // 동물 상세 조회
@@ -46,7 +48,7 @@ public class AnimalController {
             throw new AnimalException(INVALID_ANIMAL_VALUE, getErrorMessages(bindingResult));
         }
 
-        animalService.registerAnimal(
+        Region region = animalService.registerAnimal(
                 userId,
                 request.getStatus(),
                 request.getName(),
@@ -58,6 +60,7 @@ public class AnimalController {
                 request.getDetail(),
                 request.getImg()
                 );
+        userService.sendAlarm(region, request.getStatus());
         return new BaseResponse<>(ANIMAL_REGISTER_SUCCESS);
     }
 

@@ -99,7 +99,7 @@ public enum BaseExceptionResponseStatus implements ResponseStatus {
     ANIMAL_SCRAP_CANCEL_FAIL(4607, HttpStatus.BAD_REQUEST.value(), "동물 스크랩 취소에 실패하였습니다."),
     ALREADY_SCRAPPED(4608, HttpStatus.BAD_REQUEST.value(), "이미 스크랩한 동물입니다."),
     SCRAP_NOT_FOUND(4609, HttpStatus.NOT_FOUND.value(), "존재하지 않는 스크랩입니다."),
-
+    ANIMAL_STATUS_NOT_FOUND(4610, HttpStatus.NOT_FOUND.value(), "존재하지 않는 동물 상태입니다."),
 
     // 4700 : Alarm
     ALARM_NULL(4701, HttpStatus.BAD_REQUEST.value(), "알림 정보가 존재하지 않습니다."),

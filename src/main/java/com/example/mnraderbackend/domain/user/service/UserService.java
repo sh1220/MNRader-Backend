@@ -1,6 +1,7 @@
 package com.example.mnraderbackend.domain.user.service;
 
 import com.example.mnraderbackend.common.argument_resolver.PreAuthorize;
+import com.example.mnraderbackend.common.convert.statusAnimal.StatusAnimal;
 import com.example.mnraderbackend.common.exception.AlarmException;
 import com.example.mnraderbackend.common.exception.AnimalException;
 import com.example.mnraderbackend.common.exception.AuthException;
@@ -43,15 +44,25 @@ public class UserService {
         // userRepository.save(user); <- 영속성 컨텍스트에서 자동 업데이트 됨
     }
 
-    public void sendLostAlarm(@PreAuthorize String userId, Long regionId) {
-        sendFirebaseMessage("동물 실종", "현 지역에서 동물이 실종되었습니다.", regionId);
+    public void sendAlarm(Region region, Integer status) {
+
+        if(status == StatusAnimal.LOST.getCode()) {
+            sendLostAlarm(region);
+        } else if (status == StatusAnimal.SIGHTING.getCode()) {
+            sendSightAlarm(region);
+        } else {
+            throw new AnimalException(ANIMAL_STATUS_NOT_FOUND);
+        }
+    }
+    public void sendLostAlarm(Region region) {
+        sendFirebaseMessage("동물 실종", "현 지역에서 동물이 실종되었습니다.", region);
     }
 
-    public void sendSightAlarm(@PreAuthorize String userId, Long regionId) {
-        sendFirebaseMessage("유기동물 발견", "현 지역에서 동물이 발견되었습니다.", regionId);
+    public void sendSightAlarm(Region region) {
+        sendFirebaseMessage("유기동물 발견", "현 지역에서 동물이 발견되었습니다.", region);
     }
-    private void sendFirebaseMessage(String title, String content, Long regionId) {
-        List<String> registrationTokens = userRepository.findFcmTokensByRegionId(regionId);
+    private void sendFirebaseMessage(String title, String content, Region region) {
+        List<String> registrationTokens = userRepository.findFcmTokensByRegion(region);
         MulticastMessage message = MulticastMessage.builder()
                 .putData("title", title)
                 .putData("content", content)
@@ -260,6 +271,7 @@ public class UserService {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new AuthException(USER_NOT_FOUND));
     }
+
 
 
 }

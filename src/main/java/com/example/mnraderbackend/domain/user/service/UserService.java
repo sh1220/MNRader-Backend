@@ -5,7 +5,7 @@ import com.example.mnraderbackend.common.exception.AlarmException;
 import com.example.mnraderbackend.common.exception.AnimalException;
 import com.example.mnraderbackend.common.exception.AuthException;
 import com.example.mnraderbackend.common.jwt.JwtProvider;
-import com.example.mnraderbackend.common.model.*;
+import com.example.mnraderbackend.common.model.User;
 import com.example.mnraderbackend.domain.animal.AnimalRepository;
 import com.example.mnraderbackend.domain.animalUser.AnimalUserRepository;
 import com.example.mnraderbackend.domain.breed.BreedRepository;

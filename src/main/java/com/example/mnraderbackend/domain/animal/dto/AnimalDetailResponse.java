@@ -1,6 +1,5 @@
 package com.example.mnraderbackend.domain.animal.dto;
 
-import com.example.mnraderbackend.domain.user.dto.AnimalDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;

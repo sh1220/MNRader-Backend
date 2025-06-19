@@ -16,6 +16,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Builder
@@ -32,10 +33,6 @@ public class AnimalUser {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
-    @Column(nullable = false)
-    @Convert(converter = StatusAnimalConverter.class)
-    private StatusAnimal status; // LOST(1), PROTECTED(2), SIGHTING(3)
 
     @CreatedDate
     @Column(nullable = false)
@@ -56,7 +53,7 @@ public class AnimalUser {
     private String image;
 
     @Column(nullable = false)
-    private int age;
+    private Integer age;
 
     @Column(length = 40, nullable = false)
     private String name;

@@ -17,7 +17,7 @@ public class AlarmRequest {
 
     private String fcmToken;
 
-    @AssertTrue(message = "알람을 활성화할 경우 alarmToken이 필요합니다.")
+    @AssertTrue(message = "알람을 활성화할 경우 fcmToken이 필요합니다.")
     private boolean isFcmTokenValid() {
         return enabled == null || !enabled || (fcmToken != null && !fcmToken.trim().isEmpty());
     }

@@ -5,12 +5,10 @@ import com.example.mnraderbackend.common.exception.AlarmException;
 import com.example.mnraderbackend.common.exception.AnimalException;
 import com.example.mnraderbackend.common.exception.AuthException;
 import com.example.mnraderbackend.common.jwt.JwtProvider;
-import com.example.mnraderbackend.common.model.Animal;
-import com.example.mnraderbackend.common.model.AnimalUser;
-import com.example.mnraderbackend.common.model.Region;
-import com.example.mnraderbackend.common.model.User;
+import com.example.mnraderbackend.common.model.*;
 import com.example.mnraderbackend.domain.animal.AnimalRepository;
 import com.example.mnraderbackend.domain.animalUser.AnimalUserRepository;
+import com.example.mnraderbackend.domain.breed.BreedRepository;
 import com.example.mnraderbackend.domain.region.RegionRepository;
 import com.example.mnraderbackend.domain.user.dto.*;
 import com.example.mnraderbackend.domain.user.repository.ScrapRepository;
@@ -22,7 +20,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import static com.example.mnraderbackend.common.response.status.BaseExceptionResponseStatus.*;
@@ -32,6 +29,7 @@ import static com.example.mnraderbackend.common.response.status.BaseExceptionRes
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final BreedRepository breedRepository;
     private final AnimalRepository animalRepository;
     private final AnimalUserRepository animalUserRepository;
     private final RegionRepository regionRepository;
@@ -40,11 +38,9 @@ public class UserService {
 
     @Transactional
     public void registerFcmToken(Long userId, String fcmToken) {
-
         User user = getUser(userId);
-
         user.setFcmToken(fcmToken);
-        // userRepository.save(user); ← 영속성 컨텍스트에서 자동 업데이트 됨
+        // userRepository.save(user); <- 영속성 컨텍스트에서 자동 업데이트 됨
     }
 
     public void sendLostAlarm(@PreAuthorize String userId, Long regionId) {
@@ -80,7 +76,7 @@ public class UserService {
         }
     }
 
-    public HomeResponse home(Long userId) {
+    public HomeResponse home(Long userId, Long breedId, Long cityId) {
         // 사용자 정보 조회
         User user = getUser(userId);
 
@@ -88,8 +84,21 @@ public class UserService {
         Animal lastAnimal = animalRepository.findTopByOrderByIdDesc()
                 .orElseThrow(() -> new AnimalException(ANIMAL_NULL));
 
+        // city가 지정되어 있으면 해당 region을, 아니면 user의 region을 사용
+        Region targetRegion = (cityId != null)
+                ? regionRepository.findById(cityId).orElseThrow(() -> new AuthException(REGION_NOT_FOUND))
+                : user.getRegion();
+
         // 해당 지역의 동물 목록 조회
-        List<Animal> animals = animalRepository.findByRegion(user.getRegion());
+        List<Animal> animals;
+        if (breedId != null) {
+            Breed breed = breedRepository.findById(breedId)
+                    .orElseThrow(() -> new AnimalException(BREED_NOT_FOUND));
+            animals = animalRepository.findByRegionAndBreed(targetRegion, breed);
+        } else {
+            animals = animalRepository.findByRegion(targetRegion);
+        }
+
         if (animals.isEmpty()) {
             throw new AnimalException(ANIMAL_NULL);
         }
@@ -101,7 +110,7 @@ public class UserService {
                                 .animalId(animal.getId())
                                 .status(animal.getStatus().name())
                                 .img(animal.getImage())
-                                .name(animal.getName())
+                                .breed(animal.getBreed().getBreed())
                                 .city(animal.getRegion().getId())
                                 .gender(animal.getGender().name())
                                 .occurredAt(animal.getOccurredAt().toString())
@@ -111,7 +120,7 @@ public class UserService {
 
     }
 
-    public AlarmResponse alarm(Long userId, Long lastAnimalId) {
+    public AlarmResponse getAlarmPage(Long userId, Long lastAnimalId) {
         // 사용자 정보 조회
         User user = getUser(userId);
 
@@ -132,11 +141,23 @@ public class UserService {
                                 .animalId(animal.getId())
                                 .status(animal.getStatus().name())
                                 .img(animal.getImage())
-                                .name(animal.getName())
+                                .breed(animal.getBreed().getBreed())
                                 .city(animal.getRegion().getId())
                                 .build())
                         .toList())
                 .build();
+    }
+    @Transactional
+    public void changeAlarmSetting(Long userId, Boolean enabled, String fcmToken) {
+        User user = getUser(userId);
+        // 알림 설정 변경
+        if (enabled) {
+            user.setFcmToken(fcmToken);
+        } else {
+            // FCM 토큰이 null인 경우 알림 비활성화
+            user.setFcmToken(null);
+        }
+        userRepository.save(user);
     }
 
 
@@ -171,7 +192,7 @@ public class UserService {
                         .animalId(animal.getId())
                         .status(animal.getStatus().name())
                         .img(animal.getImage())
-                        .name(animal.getName())
+                        .breed(animal.getBreed().getBreed())
                         .city(animal.getRegion().getId())
                         .gender(animal.getGender().name())
                         .occurredAt(animal.getOccurredAt().toString())
@@ -192,7 +213,7 @@ public class UserService {
                         .animalId(animal.getId())
                         .status(animal.getStatus().name())
                         .img(animal.getImage())
-                        .name(animal.getName())
+                        .breed(animal.getBreed().getBreed())
                         .city(animal.getRegion().getId())
                         .gender(animal.getGender().name())
                         .occurredAt(animal.getOccurredAt().toString())
@@ -239,4 +260,6 @@ public class UserService {
         return userRepository.findById(userId)
                 .orElseThrow(() -> new AuthException(USER_NOT_FOUND));
     }
+
+
 }

@@ -22,7 +22,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/alarmToken")
-    public BaseResponse<Object> registerFcmToken(
+    public BaseResponse<Void> registerFcmToken(
             @PreAuthorize Long userId,
             @RequestBody FcmTokenRequest request
     ) {
@@ -38,7 +38,7 @@ public class UserController {
     }
 
     @PatchMapping("/alarm")
-    public BaseResponse<Object> changeAlarmSetting(
+    public BaseResponse<Void> changeAlarmSetting(
             @PreAuthorize Long userId,
             @Validated @RequestBody AlarmRequest alarmRequest,
             BindingResult bindingResult
@@ -95,7 +95,7 @@ public class UserController {
     }
 
     @PatchMapping("/my/city")
-    public BaseResponse<Object> changeCity(
+    public BaseResponse<Void> changeCity(
             @PreAuthorize Long userId,
             @Validated @RequestBody MyRegionRequest myRegionRequest,
             BindingResult bindingResult

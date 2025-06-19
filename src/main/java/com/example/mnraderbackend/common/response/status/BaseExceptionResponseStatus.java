@@ -19,6 +19,7 @@ public enum BaseExceptionResponseStatus implements ResponseStatus {
     MY_SUCCESS(1103, HttpStatus.OK.value(), "마이 페이지 조회에 성공하였습니다."),
     MY_POST_SUCCESS(1104, HttpStatus.OK.value(), "내가 올린 게시물 조회에 성공하였습니다."),
     MY_SCRAP_SUCCESS(1105, HttpStatus.OK.value(), "스크랩 조회에 성공하였습니다."),
+    ANIMAL_DETAIL_SUCCESS(1106, HttpStatus.OK.value(), "동물 상세페이지 조회에 성공하였습니다."),
 
     // 1200: 마이페이지 수정 성공
     MY_UPDATE_ALARM_SUCCESS(1201, HttpStatus.OK.value(), "알림 설정에 성공하였습니다."),
@@ -26,6 +27,10 @@ public enum BaseExceptionResponseStatus implements ResponseStatus {
     MY_UPDATE_REGION_SUCCESS(1203, HttpStatus.OK.value(), "지역 설정에 성공하였습니다."),
     // 1300: 토큰
     FCM_TOKEN_POST_SUCCESS(1301, HttpStatus.OK.value(), "FCM 토큰 등록에 성공하였습니다."),
+    // 1600: animal
+    ANIMAL_REGISTER_SUCCESS(1605, HttpStatus.OK.value(), "동물 실종/목격 등록에 성공했습니다"),
+    ANIMAL_SCRAP_SUCCESS(1606, HttpStatus.OK.value(), "동물 스크랩 등록에 성공했습니다."),
+    ANIMAL_SCRAP_CANCEL_SUCCESS(1607, HttpStatus.OK.value(), "동물 스크랩 취소에 성공했습니다."),
 
     /**
      * 2000: Request 오류 (BAD_REQUEST)
@@ -63,6 +68,7 @@ public enum BaseExceptionResponseStatus implements ResponseStatus {
     MY_FAIL(4103, HttpStatus.NOT_FOUND.value(),  "마이 페이지 조회에 실패하였습니다."),
     MY_POST_FAIL(4104, HttpStatus.NOT_FOUND.value(),  "내가 올린 게시물 조회에 실패하였습니다."),
     MY_SCRAP_FAIL(4105, HttpStatus.NOT_FOUND.value(),  "스크랩 조회에 실패하였습니다."),
+    ANIMAL_DETAIL_FAIL(4106, HttpStatus.NOT_FOUND.value(), "동물 상세페이지 조회에 실패하였습니다."),
     // 4200: 마이페이지 수정 실패
     MY_UPDATE_ALARM_FAIL(4201, HttpStatus.NOT_FOUND.value(), "알림 설정에 실패하였습니다."),
     MY_UPDATE_EMAIL_FAIL(4202, HttpStatus.NOT_FOUND.value(), "이메일 설정에 실패하였습니다."),
@@ -82,6 +88,11 @@ public enum BaseExceptionResponseStatus implements ResponseStatus {
     ANIMAL_NULL(4601, HttpStatus.BAD_REQUEST.value(), "동물 정보가 존재하지 않습니다."),
     ANIMAL_NOT_FOUND(4602, HttpStatus.NOT_FOUND.value(), "존재하지 않는 동물입니다."),
     BREED_NOT_FOUND(4603, HttpStatus.NOT_FOUND.value(), "존재하지 않는 품종입니다."),
+    INVALID_ANIMAL_VALUE(4604, HttpStatus.BAD_REQUEST.value(), "유효하지 않은 동물 정보입니다."),
+    ANIMAL_REGISTER_FAIL(4605, HttpStatus.BAD_REQUEST.value(), "동물 실종/목격 등록에 실패하였습니다."),
+    ANIMAL_SCRAP_FAIL(4606, HttpStatus.BAD_REQUEST.value(), "동물 스크랩 등록에 실패하였습니다."),
+    ANIMAL_SCRAP_CANCEL_FAIL(4607, HttpStatus.BAD_REQUEST.value(), "동물 스크랩 취소에 실패하였습니다."),
+
     // 4700 : Alarm
     ALARM_NULL(4701, HttpStatus.BAD_REQUEST.value(), "알림 정보가 존재하지 않습니다."),
     /**

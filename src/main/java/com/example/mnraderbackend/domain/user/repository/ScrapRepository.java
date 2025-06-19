@@ -14,4 +14,8 @@ public interface ScrapRepository extends JpaRepository<Scrap, Long> {
     @Query("select s.animal from Scrap s where s.user = :user")
     List<Animal> findAnimalsByUser(@Param("user") User user);
 
+    Boolean existsByUserIdAndAnimalId(@Param("userId") Long userId, @Param("animalId") Long animalId);
+
+
+    Optional<Scrap> findByUserIdAndAnimalId(@Param("userId") Long userId, @Param("animalId") Long animalId);
 }

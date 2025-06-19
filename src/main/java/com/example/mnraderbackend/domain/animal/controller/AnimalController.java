@@ -29,38 +29,56 @@ public class AnimalController {
 
     // 동물 상세 조회
     @GetMapping("/detail/{animalId}")
-    public BaseResponse<AnimalDetailResponse> getAnimalDetail(@PathVariable Long animalId) {
-        return new BaseResponse<>(ANIMAL_DETAIL_SUCCESS, animalService.getAnimalDetail(animalId));
+    public BaseResponse<AnimalDetailResponse> getAnimalDetail(
+            @PreAuthorize Long userId,
+            @PathVariable Long animalId
+    ) {
+        return new BaseResponse<>(ANIMAL_DETAIL_SUCCESS, animalService.getAnimalDetail(userId, animalId));
     }
 
     // 실종 동물 / 동물 목격 등록
     @PostMapping(value = "/register", consumes = "multipart/form-data")
     public BaseResponse<Void> registerAnimal(
+            @PreAuthorize Long userId,
             @Validated @ModelAttribute AnimalRegisterRequest request,
-            BindingResult bindingResult,
-            @PreAuthorize Long userId
+            BindingResult bindingResult
     ) {
         if (bindingResult.hasErrors()) {
             throw new AnimalException(INVALID_ANIMAL_VALUE, getErrorMessages(bindingResult));
         }
 
-        animalService.registerAnimal(request, userId);
+        animalService.registerAnimal(
+                userId,
+                request.getStatus(),
+                request.getName(),
+                request.getContact(),
+                request.getBreed(),
+                request.getGender(),
+                request.getAddress(),
+                request.getOccuredAt(),
+                request.getDetail(),
+                request.getImg()
+                );
         return new BaseResponse<>(ANIMAL_REGISTER_SUCCESS);
     }
 
     // 동물 스크랩 등록
     @PostMapping("/scrap/{animalId}")
-    public BaseResponse<Void> scrapAnimal(@PathVariable Long animalId,
-                                          @PreAuthorize Long userId) {
-        animalService.scrapAnimal(animalId, userId);
+    public BaseResponse<Void> scrapAnimal(
+            @PreAuthorize Long userId,
+            @PathVariable Long animalId
+    ) {
+        animalService.scrapAnimal(userId, animalId);
         return new BaseResponse<>(ANIMAL_SCRAP_SUCCESS);
     }
 
     // 동물 스크랩 취소
     @DeleteMapping("/scrap/{animalId}")
-    public BaseResponse<Void> cancelScrap(@PathVariable Long animalId,
-                                          @PreAuthorize Long userId) {
-        animalService.cancelScrap(animalId, userId);
+    public BaseResponse<Void> cancelScrap(
+            @PreAuthorize Long userId,
+            @PathVariable Long animalId
+    ) {
+        animalService.cancelScrap(userId, animalId);
         return new BaseResponse<>(ANIMAL_SCRAP_CANCEL_SUCCESS);
     }
 

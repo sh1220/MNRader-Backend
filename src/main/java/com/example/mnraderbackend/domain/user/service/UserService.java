@@ -45,13 +45,15 @@ public class UserService {
     }
 
     public void sendAlarm(Region region, Integer status) {
-
-        if(status == StatusAnimal.LOST.getCode()) {
-            sendLostAlarm(region);
-        } else if (status == StatusAnimal.SIGHTING.getCode()) {
-            sendSightAlarm(region);
-        } else {
-            throw new AnimalException(ANIMAL_STATUS_NOT_FOUND);
+        switch (status) {
+            case StatusAnimal.LOST.getCode():
+                sendLostAlarm(region);
+                break;
+            case StatusAnimal.SIGHTING.getCode():
+                sendSightAlarm(region);
+                break;
+            default:
+                throw new AnimalException(ANIMAL_STATUS_NOT_FOUND);
         }
     }
     public void sendLostAlarm(Region region) {

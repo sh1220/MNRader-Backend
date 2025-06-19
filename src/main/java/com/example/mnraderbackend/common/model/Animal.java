@@ -24,6 +24,14 @@ public class Animal {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @CreatedDate
+    @Column(nullable = false)
+    private Timestamp createdAt;
+
+    @LastModifiedDate
+    @Column(nullable = false)
+    private Timestamp updatedAt;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "breed_id", nullable = false)
     private Breed breed;
@@ -39,14 +47,6 @@ public class Animal {
     @Column(nullable = false)
     @Convert(converter = StatusAnimalConverter.class)
     private StatusAnimal status;
-
-    @CreatedDate
-    @Column(nullable = false)
-    private Timestamp createdAt;
-
-    @LastModifiedDate
-    @Column(nullable = false)
-    private Timestamp updatedAt;
 
     @Column(nullable = false, length = 300)
     private String address;

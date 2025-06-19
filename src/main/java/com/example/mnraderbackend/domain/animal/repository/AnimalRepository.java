@@ -1,4 +1,4 @@
-package com.example.mnraderbackend.domain.animal;
+package com.example.mnraderbackend.domain.animal.repository;
 
 import com.example.mnraderbackend.common.model.Animal;
 import com.example.mnraderbackend.common.model.Breed;

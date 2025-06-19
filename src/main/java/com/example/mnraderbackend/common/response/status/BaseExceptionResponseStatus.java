@@ -20,6 +20,7 @@ public enum BaseExceptionResponseStatus implements ResponseStatus {
     MY_POST_SUCCESS(1104, HttpStatus.OK.value(), "내가 올린 게시물 조회에 성공하였습니다."),
     MY_SCRAP_SUCCESS(1105, HttpStatus.OK.value(), "스크랩 조회에 성공하였습니다."),
     ANIMAL_DETAIL_SUCCESS(1106, HttpStatus.OK.value(), "동물 상세페이지 조회에 성공하였습니다."),
+    ANIMAL_USER_DETAIL_SUCCESS(1107, HttpStatus.OK.value(), "유저 동물 상세화면 페이지 조회에 성공하였습니다."),
 
     // 1200: 마이페이지 수정 성공
     MY_UPDATE_ALARM_SUCCESS(1201, HttpStatus.OK.value(), "알림 설정에 성공하였습니다."),
@@ -32,6 +33,9 @@ public enum BaseExceptionResponseStatus implements ResponseStatus {
     ANIMAL_SCRAP_SUCCESS(1606, HttpStatus.OK.value(), "동물 스크랩 등록에 성공했습니다."),
     ANIMAL_SCRAP_CANCEL_SUCCESS(1607, HttpStatus.OK.value(), "동물 스크랩 취소에 성공했습니다."),
 
+    // 1800 : animalUser
+    ANIMAL_USER_REGISTER_SUCCESS(1801, HttpStatus.OK.value(), "유저 동물 등록에 성공했습니다."),
+    ANIMAL_USER_UPDATE_SUCCESS(1802, HttpStatus.OK.value(), "유저 동물 정보 수정에 성공했습니다."),
     /**
      * 2000: Request 오류 (BAD_REQUEST)
      */
@@ -69,6 +73,7 @@ public enum BaseExceptionResponseStatus implements ResponseStatus {
     MY_POST_FAIL(4104, HttpStatus.NOT_FOUND.value(),  "내가 올린 게시물 조회에 실패하였습니다."),
     MY_SCRAP_FAIL(4105, HttpStatus.NOT_FOUND.value(),  "스크랩 조회에 실패하였습니다."),
     ANIMAL_DETAIL_FAIL(4106, HttpStatus.NOT_FOUND.value(), "동물 상세페이지 조회에 실패하였습니다."),
+    ANIMAL_USER_FAIL(4107, HttpStatus.NOT_FOUND.value(), "유저 동물 상세화면 페이지 조회에 실패하였습니다."),
     // 4200: 마이페이지 수정 실패
     MY_UPDATE_ALARM_FAIL(4201, HttpStatus.NOT_FOUND.value(), "알림 설정에 실패하였습니다."),
     MY_UPDATE_EMAIL_FAIL(4202, HttpStatus.NOT_FOUND.value(), "이메일 설정에 실패하였습니다."),
@@ -98,6 +103,15 @@ public enum BaseExceptionResponseStatus implements ResponseStatus {
 
     // 4700 : Alarm
     ALARM_NULL(4701, HttpStatus.BAD_REQUEST.value(), "알림 정보가 존재하지 않습니다."),
+
+    // 4800 : AnimalUser
+    ANIMAL_USER_REGISTER_FAILED(4801, HttpStatus.BAD_REQUEST.value(), "유저 동물 등록에 실패했습니다."),
+
+    ANIMAL_USER_UPDATE_FAILED(4802, HttpStatus.BAD_REQUEST.value(), "유저 동물 정보 수정에 실패했습니다."),
+
+    ANIMAL_USER_NOT_FOUND(4803, HttpStatus.BAD_REQUEST.value(), "유저 동물 정보가 존재하지 않습니다."),
+    INVALID_ANIMAL_USER_VALUE(4804, HttpStatus.BAD_REQUEST.value(), "유효하지 않은 유저 동물 정보입니다."),
+
     /**
      * 5000: Authorization 오류
      */

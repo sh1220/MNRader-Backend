@@ -34,10 +34,16 @@ public class S3ImageService {
     private String region;
 
     private static final String ANIMAL_IMG_DIR = "animal/";
+    private static final String ANIMAL_USER_IMG_DIR = "animalUser/";
 
     public String saveAnimalImg(MultipartFile uploadFile) {
         validateUploadFile(uploadFile);
         return saveImg(uploadFile, ANIMAL_IMG_DIR);
+    }
+
+    public String saveAnimalUserImg(MultipartFile uploadFile) {
+        validateUploadFile(uploadFile);
+        return saveImg(uploadFile, ANIMAL_USER_IMG_DIR);
     }
 
     private String saveImg(MultipartFile uploadFile, String dir) {

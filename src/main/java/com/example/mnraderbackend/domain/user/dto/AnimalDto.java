@@ -13,7 +13,7 @@ public class AnimalDto {
     private Long animalId;
     private String status;
     private String img;
-    private String name;
+    private String breed;
     private Long city;
     private String gender;
     private String occurredAt;

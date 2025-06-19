@@ -2,15 +2,14 @@ package com.example.mnraderbackend.common.model;
 
 import com.example.mnraderbackend.common.convert.gender.Gender;
 import com.example.mnraderbackend.common.convert.gender.GenderConverter;
-import com.example.mnraderbackend.common.convert.status.Status;
-import com.example.mnraderbackend.common.convert.status.StatusConverter;
+import com.example.mnraderbackend.common.convert.statusAnimal.StatusAnimal;
+import com.example.mnraderbackend.common.convert.statusAnimal.StatusAnimalConverter;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 
@@ -38,8 +37,8 @@ public class Animal {
     private Region region;
 
     @Column(nullable = false)
-    @Convert(converter = StatusConverter.class)
-    private Status status;
+    @Convert(converter = StatusAnimalConverter.class)
+    private StatusAnimal status;
 
     @CreatedDate
     @Column(nullable = false)

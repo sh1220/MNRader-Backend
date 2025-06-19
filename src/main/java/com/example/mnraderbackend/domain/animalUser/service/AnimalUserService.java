@@ -117,10 +117,10 @@ public class AnimalUserService {
             animalUser.setAge(age);
         }
 
-        if (!detail.equals(animalUser.getDetail())) {
-            if (detail.isBlank()) {
-                detail = "상세 정보가 없습니다.";
-            }
+        if (detail == null || detail.isBlank()) {
+            detail = "상세 정보가 없습니다.";
+            animalUser.setDetail(detail);
+        } else if (!detail.equals(animalUser.getDetail())) {
             animalUser.setDetail(detail);
         }
 

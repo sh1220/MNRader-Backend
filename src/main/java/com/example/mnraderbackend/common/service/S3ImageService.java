@@ -53,7 +53,7 @@ public class S3ImageService {
                     .bucket(bucket)
                     .key(fileName)
                     .contentType(uploadFile.getContentType())
-                    .acl(ObjectCannedACL.PUBLIC_READ) // v2에서는 ObjectCannedACL 사용
+//                    .acl(ObjectCannedACL.PUBLIC_READ) // v2에서는 ObjectCannedACL 사용 => 현재 bucket policy로 공개 설정
                     .build();
 
             s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(uploadFile.getInputStream(), uploadFile.getSize()));

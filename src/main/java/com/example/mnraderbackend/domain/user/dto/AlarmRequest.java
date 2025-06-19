@@ -1,6 +1,5 @@
 package com.example.mnraderbackend.domain.user.dto;
 
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.AssertTrue;
 import lombok.Getter;

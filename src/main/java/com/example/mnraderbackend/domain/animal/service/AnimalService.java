@@ -54,7 +54,7 @@ public class AnimalService {
     }
 
     @Transactional
-    public void registerAnimal(
+    public Region registerAnimal(
             Long userId,
             Integer statusCode,
             String name,
@@ -98,6 +98,8 @@ public class AnimalService {
                 .image(imageUrl)
                 .build();
         animalRepository.save(newAnimal);
+
+        return region;
     }
 
 

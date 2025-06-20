@@ -5,6 +5,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 
 import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 public class FirebaseInitializer {
@@ -15,15 +16,13 @@ public class FirebaseInitializer {
         if (rawJson == null || rawJson.trim().isEmpty()) {
             throw new IllegalStateException("FIREBASE_CREDENTIALS_JSON 환경변수가 없습니다.");
         }
+        String json = System.getenv("FIREBASE_CREDENTIALS_JSON");
+        InputStream serviceAccount = new ByteArrayInputStream(json.getBytes(StandardCharsets.UTF_8));
+        GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccount);
 
-        // 역슬래시와 큰따옴표가 포함된 문자열을 정상 JSON으로 복원
-        String json = rawJson.replace("\\\"", "\"").replace("\\\\n", "\\n");
-
-
-        ByteArrayInputStream serviceAccount = new ByteArrayInputStream(json.getBytes(StandardCharsets.UTF_8));
 
         FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                .setCredentials(credentials)
                 .build();
 
         FirebaseApp.initializeApp(options);

@@ -12,8 +12,9 @@ import java.nio.charset.StandardCharsets;
 public class FirebaseInitializer {
 
     public static void initialize() throws Exception {
-        String path = "/app/firebase-key.json"; // 실제 경로
+        String path = "/home/ubuntu/firebase-key.json"; // 실제 경로
         FileInputStream serviceAccount = new FileInputStream(path);
+
 
 
 
@@ -22,5 +23,7 @@ public class FirebaseInitializer {
                 .build();
 
         FirebaseApp.initializeApp(options);
+
+
     }
 }

@@ -5,24 +5,20 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileInputStream;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 
 public class FirebaseInitializer {
 
     public static void initialize() throws Exception {
-        String rawJson = System.getenv("FIREBASE_CREDENTIALS_JSON");
+        String path = "/app/firebase-key.json"; // 실제 경로
+        FileInputStream serviceAccount = new FileInputStream(path);
 
-        if (rawJson == null || rawJson.trim().isEmpty()) {
-            throw new IllegalStateException("FIREBASE_CREDENTIALS_JSON 환경변수가 없습니다.");
-        }
-        String json = System.getenv("FIREBASE_CREDENTIALS_JSON");
-        InputStream serviceAccount = new ByteArrayInputStream(json.getBytes(StandardCharsets.UTF_8));
-        GoogleCredentials credentials = GoogleCredentials.fromStream(serviceAccount);
 
 
         FirebaseOptions options = new FirebaseOptions.Builder()
-                .setCredentials(credentials)
+                .setCredentials(GoogleCredentials.fromStream(serviceAccount))
                 .build();
 
         FirebaseApp.initializeApp(options);

@@ -65,7 +65,8 @@ jobs:
                 -e DATASOURCE_PASSWORD=${{ secrets.DATASOURCE_PASSWORD }} \
                 -e DATASOURCE_URL=${{ secrets.DATASOURCE_URL }} \
                 -e DATASOURCE_URL_DEV=${{ secrets.DATASOURCE_URL_DEV }} \
-                -e FIREBASE_CREDENTIALS_JSON='\''${{ secrets.FIREBASE_CREDENTIALS_JSON }}'\'' \
+                -e FIREBASE_CREDENTIALS_JSON=/app/firebase-key.json \
+                -v /home/ubuntu/firebase-key.json:/app/firebase-key.json \
                 -e SPRING_PROFILES_ACTIVE=dev \
                 -e AWS_S3_BUCKET_ACCESS_KEY=${{ secrets.AWS_S3_BUCKET_ACCESS_KEY }} \
                 -e AWS_S3_BUCKET_SECRET_KEY=${{ secrets.AWS_S3_BUCKET_SECRET_KEY }} \

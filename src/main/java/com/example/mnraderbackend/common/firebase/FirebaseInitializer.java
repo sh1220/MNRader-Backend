@@ -10,11 +10,15 @@ import java.nio.charset.StandardCharsets;
 public class FirebaseInitializer {
 
     public static void initialize() throws Exception {
-        String json = System.getenv("FIREBASE_CREDENTIALS_JSON");
+        String rawJson = System.getenv("FIREBASE_CREDENTIALS_JSON");
 
-        if (json == null) {
+        if (rawJson == null || rawJson.trim().isEmpty()) {
             throw new IllegalStateException("FIREBASE_CREDENTIALS_JSON 환경변수가 없습니다.");
         }
+
+        // 역슬래시와 큰따옴표가 포함된 문자열을 정상 JSON으로 복원
+        String json = rawJson.replace("\\\"", "\"").replace("\\\\n", "\\n");
+
 
         ByteArrayInputStream serviceAccount = new ByteArrayInputStream(json.getBytes(StandardCharsets.UTF_8));
 

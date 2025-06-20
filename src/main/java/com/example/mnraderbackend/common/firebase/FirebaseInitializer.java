@@ -12,10 +12,11 @@ import java.nio.charset.StandardCharsets;
 public class FirebaseInitializer {
 
     public static void initialize() throws Exception {
-        String path = "/home/ubuntu/firebase-key.json"; // 실제 경로
-        FileInputStream serviceAccount = new FileInputStream(path);
-
-
+        String path = System.getenv("FIREBASE_CREDENTIALS_JSON");
+        if (path == null) {
+            throw new IllegalStateException("FIREBASE_CREDENTIALS_JSON 환경변수가 설정되어 있지 않습니다.");
+        }
+        InputStream serviceAccount = new FileInputStream(path);
 
 
         FirebaseOptions options = new FirebaseOptions.Builder()
